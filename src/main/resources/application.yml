@@ -1,0 +1,27 @@
+logging:
+  level:
+    com:
+      moderation: DEBUG
+server:
+  port: 8080
+
+spring:
+  application:
+    name: temporal-demo
+  temporal:
+    connection:
+      target: 127.0.0.1:7233
+      target.namespace: default
+    workers:
+      - task-queue: MODERATION_TASK_QUEUE
+        capacity:
+          max-concurrent-workflow-task-pollers: 6
+          max-concurrent-activity-task-pollers: 6
+        rate-limits:
+          max-worker-activities-per-second: 2
+          max-task-queue-activities-per-second: 2
+    workflow-cache:
+      max-instances: 10
+      max-threads: 10
+    workersAutoDiscovery:
+      packages: com.moderation
